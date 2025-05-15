@@ -16,7 +16,7 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -Xcompiler -Wall -Xcompiler -fPIC")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Find TensorRT and CUDA Toolkit
-set(TensorRT_DIR /home/cdadon/projects/TensorRT-10.10.0.31/) # TODO change
+set(TensorRT_DIR /home/yz9qvs/projects/TensorRT-10.1.0.27/) # TODO change
 find_package(TensorRT REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 
