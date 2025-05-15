@@ -5,8 +5,14 @@ set(TARGET_NAME ${CMAKE_PROJECT_NAME}_${PLUGIN_NAME})
 
 file(GLOB PLUGIN_SOURCES *.cpp)
 file(GLOB PLUGIN_CU_SOURCES *.cu)
+file(GLOB COMMON_PLUGIN_SOURCES  ${CMAKE_SOURCE_DIR}/common/*.cpp)
 
-add_library(${TARGET_NAME} SHARED ${PLUGIN_SOURCES} ${PLUGIN_CU_SOURCES})
+add_library(${TARGET_NAME}
+    SHARED
+        ${PLUGIN_SOURCES}
+        ${PLUGIN_CU_SOURCES}
+        ${COMMON_PLUGIN_SOURCES}
+        )
 
 target_include_directories(${TARGET_NAME}
     PRIVATE
@@ -18,7 +24,6 @@ target_include_directories(${TARGET_NAME}
 
 target_link_libraries(${TARGET_NAME}
     PRIVATE
-        common
         CUDA::cudart
         ${TensorRT_LIBRARIES}
 )

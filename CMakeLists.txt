@@ -22,7 +22,6 @@ find_package(CUDAToolkit REQUIRED)
 
 # Include base plugin utilities
 include_directories(base)
-add_subdirectory(common)
 
 # Add each plugin
 file(GLOB PLUGIN_DIRS CONFIGURE_DEPENDS plugins/*)

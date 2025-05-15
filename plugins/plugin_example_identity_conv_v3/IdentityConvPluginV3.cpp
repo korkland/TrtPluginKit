@@ -8,7 +8,7 @@ namespace nvinfer1
 {
 namespace plugin
 {
-constexpr char const* kPluginName = "IdentityConvPlugin";
+constexpr char const* kPluginName = "IdentityConv";
 constexpr char const* kPluginVersion = "1";
 constexpr char const* kPluginNamespace = "";
 
@@ -141,7 +141,6 @@ int32_t IdentityConvPluginV3::getOutputShapes(DimsExprs const* inputs, int32_t n
                                                DimsExprs* outputs, int32_t nbOutputs, IExprBuilder& exprBuilder) noexcept
 {
     PLUGIN_ASSERT(inputs != nullptr);
-    PLUGIN_ASSERT(shapeInputs != nullptr);
     PLUGIN_ASSERT(outputs != nullptr);
     PLUGIN_ASSERT(nbInputs == 2);
     PLUGIN_ASSERT(nbOutputs == 1);
@@ -240,6 +239,8 @@ IPluginV3* IdentityConvPluginV3Creator::createPlugin(char const* name, PluginFie
         try
         {
             PLUGIN_ASSERT(fc != nullptr);
+            logInfo(("number of fields: " + std::to_string(fc->nbFields)).c_str());
+            logInfo(("field name: " + std::string(fc->fields[0].name)).c_str());
             PLUGIN_ASSERT(fc->nbFields == 4);
             PluginField const* fields = fc->fields;
 
@@ -323,7 +324,7 @@ IPluginV3* IdentityConvPluginV3Creator::createPlugin(char const* name, PluginFie
 } // namespace plugin
 } // namespace nvinfer1
 
-extern "C" nvinfer1::IPluginCreatorInterface* const* getCreators(int32_t& nbCreators)
+extern "C" TENSORRTAPI nvinfer1::IPluginCreatorInterface* const* getCreators(int32_t& nbCreators)
 {
     nbCreators = 1;
     static nvinfer1::plugin::IdentityConvPluginV3Creator identityConvPluginCreator;
