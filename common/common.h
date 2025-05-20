@@ -5,6 +5,7 @@
 #include <exception>
 #include <cstdlib>
 
+#include <cuda_runtime.h>
 #include <NvInferRuntime.h>
 
 namespace nvinfer1
@@ -50,6 +51,21 @@ inline void reportValidation(bool success, char const* msg, char const* file, in
 
 } // namespace plugin
 } // namespace nvinfer1
+
+#define PLUGIN_CUASSERT(val) reportCudaError((val), #val, __FILE__, __LINE__)
+inline void reportCudaError(cudaError_t status, char const* msg, char const* file, int32_t line)
+{
+    if (status != cudaSuccess)
+    {
+        std::ostringstream stream;
+        stream << "CUDA error: " << msg << std::endl
+               << file << ':' << line << std::endl
+               << "Error code: " << status << std::endl
+               << "Error message: " << cudaGetErrorString(status) << std::endl;
+        getLogger()->log(nvinfer1::ILogger::Severity::kINTERNAL_ERROR, stream.str().c_str());
+        std::abort();
+    }
+}
 
 // for plugin registration
 extern "C" TENSORRTAPI void setLoggerFinder(nvinfer1::ILoggerFinder* finder);

@@ -2,7 +2,6 @@
 
 #include <cuda_runtime.h>
 #include "IPluginBase.h"
-#include "IdentityConvParameters.h"
 #include "common.h"
 #include <vector>
 
@@ -11,13 +10,13 @@ namespace nvinfer1
 namespace plugin
 {
 
-class IdentityConvPluginV3 : public IPluginBase,
-                             public IPluginV3OneBuild,
-                             public IPluginV3OneRuntime
+class DeformableAggregationPlugin : public IPluginBase,
+                                    public IPluginV3OneBuild,
+                                    public IPluginV3OneRuntime
 {
 public:
-    explicit IdentityConvPluginV3(const IdentityConvParameters& params);
-    ~IdentityConvPluginV3() override = default;
+    explicit DeformableAggregationPlugin();
+    ~DeformableAggregationPlugin() override = default;
 
     // IPluginV3 methods
     IPluginCapability* getCapabilityInterface(PluginCapabilityType type) noexcept override;
@@ -47,16 +46,15 @@ public:
                             DynamicPluginTensorDesc const* outputs, int32_t nbOutputs) const noexcept override;
 
 private:
-    IdentityConvParameters m_params{};
     std::vector<nvinfer1::PluginField> m_DataToSerialize;
     nvinfer1::PluginFieldCollection m_FCToSerialize;
 };
 
-class IdentityConvPluginV3Creator : public IPluginCreatorBase
+class DeformableAggregationCreator : public IPluginCreatorBase
 {
 public:
-    IdentityConvPluginV3Creator();
-    ~IdentityConvPluginV3Creator() override = default;
+    DeformableAggregationCreator();
+    ~DeformableAggregationCreator() override = default;
 
     PluginFieldCollection const* getFieldNames() noexcept override;
     IPluginV3* createPlugin(char const* name, PluginFieldCollection const* fc, TensorRTPhase phase) noexcept override;

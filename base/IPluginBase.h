@@ -4,6 +4,19 @@
 #include <NvInferRuntimePlugin.h>
 #include <string>
 
+// Defines the getCreators() function for a single plugin creator
+#define DEFINE_TRT_PLUGIN_CREATOR(PluginCreatorClass)                             \
+extern "C" TENSORRTAPI nvinfer1::IPluginCreatorInterface* const* getCreators(     \
+    int32_t& nbCreators)                                                          \
+{                                                                                 \
+    nbCreators = 1;                                                               \
+    static PluginCreatorClass creatorInstance;                                    \
+    static nvinfer1::IPluginCreatorInterface* const creatorList[] = {             \
+        &creatorInstance                                                          \
+    };                                                                            \
+    return creatorList;                                                           \
+}
+
 namespace nvinfer1
 {
 namespace plugin
