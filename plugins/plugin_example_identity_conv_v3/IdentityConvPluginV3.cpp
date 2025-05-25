@@ -170,7 +170,8 @@ int32_t IdentityConvPluginV3::enqueue(PluginTensorDesc const* inputDesc, PluginT
                            inputDesc[0].dims.d[2] * inputDesc[0].dims.d[3] *
                            m_params.dtypeBytes;
 
-    return cudaMemcpyAsync(outputs[0], inputs[0], inputSize, cudaMemcpyDeviceToDevice, stream);
+    PLUGIN_CUASSERT(cudaMemcpyAsync(outputs[0], inputs[0], inputSize, cudaMemcpyDeviceToDevice, stream));
+    return 0;
 }
 
 int32_t IdentityConvPluginV3::onShapeChange(PluginTensorDesc const* in, int32_t nbInput,
@@ -324,10 +325,4 @@ IPluginV3* IdentityConvPluginV3Creator::createPlugin(char const* name, PluginFie
 } // namespace plugin
 } // namespace nvinfer1
 
-extern "C" TENSORRTAPI nvinfer1::IPluginCreatorInterface* const* getCreators(int32_t& nbCreators)
-{
-    nbCreators = 1;
-    static nvinfer1::plugin::IdentityConvPluginV3Creator identityConvPluginCreator;
-    static nvinfer1::IPluginCreatorInterface* const kPLUGIN_CREATOR_LIST[] = {&identityConvPluginCreator};
-    return kPLUGIN_CREATOR_LIST;
-}
+DEFINE_TRT_PLUGIN_CREATOR(nvinfer1::plugin::IdentityConvPluginV3Creator);
