@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ONNX first
-RUN pip3 install --no-cache-dir onnx
+RUN pip3 install --no-cache-dir onnx onnxscript
 
 # Install torch-tensorrt FIRST - it will pull the correct torch version
 RUN pip3 install --no-cache-dir torch-tensorrt==2.9.0
