@@ -1,5 +1,7 @@
 *.trt
 *.onnx
-*build*
+*.ts
+build
 .vscode
 external
+__pycache__/

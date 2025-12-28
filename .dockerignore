@@ -1,0 +1,14 @@
+build/
+*.onnx
+*.engine
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git/
+.gitignore
+*.o
+*.so
+*.a
+.vscode/
+.idea/

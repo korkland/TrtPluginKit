@@ -17,7 +17,6 @@ set(CMAKE_CUDA_ARCHITECTURES 86)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Find TensorRT and CUDA Toolkit
-set(TensorRT_DIR "${CMAKE_SOURCE_DIR}/external/TensorRT-10.1.0.27") # TODO change
 find_package(TensorRT REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 

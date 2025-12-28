@@ -35,24 +35,24 @@ list(APPEND _TensorRT_SEARCHES _TensorRT_SEARCH_NORMAL)
 
 # Include dir
 foreach(search ${_TensorRT_SEARCHES})
-    find_path(TensorRT_INCLUDE_DIR NAMES NvInfer.h ${${search}} PATH_SUFFIXES include)
+    find_path(TensorRT_INCLUDE_DIR NAMES NvInfer.h ${${search}} PATH_SUFFIXES include include/x86_64-linux-gnu)
 endforeach()
 
 if(NOT TensorRT_LIBRARY)
     foreach(search ${_TensorRT_SEARCHES})
-        find_library(TensorRT_LIBRARY NAMES nvinfer ${${search}} PATH_SUFFIXES lib)
+        find_library(TensorRT_LIBRARY NAMES nvinfer ${${search}} PATH_SUFFIXES lib lib/x86_64-linux-gnu)
     endforeach()
 endif()
 
 if(NOT TensorRT_PLUGINS_LIBRARY)
     foreach(search ${_TensorRT_SEARCHES})
-        find_library(TensorRT_PLUGINS_LIBRARY NAMES nvinfer_plugin ${${search}} PATH_SUFFIXES lib)
+        find_library(TensorRT_PLUGINS_LIBRARY NAMES nvinfer_plugin ${${search}} PATH_SUFFIXES lib lib/x86_64-linux-gnu)
     endforeach()
 endif()
 
 if(NOT TensorRT_NVONNXPARSER_LIBRARY)
     foreach(search ${_TensorRT_SEARCHES})
-        find_library(TensorRT_NVONNXPARSER_LIBRARY NAMES nvonnxparser ${${search}} PATH_SUFFIXES lib)
+        find_library(TensorRT_NVONNXPARSER_LIBRARY NAMES nvonnxparser ${${search}} PATH_SUFFIXES lib lib/x86_64-linux-gnu)
     endforeach()
 endif()
 
@@ -80,8 +80,7 @@ if(TensorRT_FOUND)
     endif()
 
     if(NOT TARGET TensorRT::TensorRT)
-        add_library(TensorRT::TensorRT UNKNOWN IMPORTED
-                ../../perception_infra/backend/x86/algo_flows/neural_nets_trt/src/dummy.cpp)
+        add_library(TensorRT::TensorRT UNKNOWN IMPORTED)
         set_target_properties(TensorRT::TensorRT PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${TensorRT_INCLUDE_DIRS}")
         set_property(TARGET TensorRT::TensorRT APPEND PROPERTY IMPORTED_LOCATION "${TensorRT_LIBRARY}")
     endif()

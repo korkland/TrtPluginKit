@@ -42,8 +42,12 @@ def create_onnx(onnx_path):
                       args=(mc_ms_feat, spatial_shape, scale_start_index, sampling_location, weights),
                       f=onnx_path,
                       opset_version=17,
-                    #   input_names=['input'],
-                    #   output_names=['output'],
+                      input_names=['mc_ms_feat',
+                                   'spatial_shape',
+                                   'scale_start_index',
+                                   'sampling_location',
+                                   'weights'],
+                      output_names=['output'],
                       export_modules_as_functions={DeformableAggregation})
 
 if __name__ == "__main__":

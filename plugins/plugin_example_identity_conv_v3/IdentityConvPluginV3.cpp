@@ -3,6 +3,7 @@
 #include <mutex>
 #include <memory>
 #include <cstring>
+#include <array>
 
 namespace nvinfer1
 {
